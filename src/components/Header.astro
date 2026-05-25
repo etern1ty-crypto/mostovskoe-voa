@@ -124,14 +124,16 @@ function isActive(href: string) {
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(
-    "[data-mobile-menu-toggle]",
-  );
-  const menu = document.querySelector<HTMLDivElement>("[data-mobile-menu]");
-  const menuIcon = toggle?.querySelector(".menu-icon");
-  const closeIcon = toggle?.querySelector(".close-icon");
-
-  if (toggle && menu) {
+  const bindMobileMenu = () => {
+    const toggle = document.querySelector<HTMLButtonElement>(
+      "[data-mobile-menu-toggle]",
+    );
+    const menu = document.querySelector<HTMLDivElement>("[data-mobile-menu]");
+    if (!toggle || !menu) return;
+    if (toggle.dataset.bound === "1") return;
+    toggle.dataset.bound = "1";
+    const menuIcon = toggle.querySelector(".menu-icon");
+    const closeIcon = toggle.querySelector(".close-icon");
     toggle.addEventListener("click", () => {
       const isOpen = menu.classList.toggle("hidden") === false;
       toggle.setAttribute("aria-expanded", String(isOpen));
@@ -140,5 +142,12 @@ function isActive(href: string) {
       closeIcon?.classList.toggle("hidden", !isOpen);
       closeIcon?.classList.toggle("block", isOpen);
     });
+  };
+
+  if (document.readyState !== "loading") {
+    bindMobileMenu();
+  } else {
+    document.addEventListener("DOMContentLoaded", bindMobileMenu);
   }
+  document.addEventListener("astro:page-load", bindMobileMenu);
 </script>
