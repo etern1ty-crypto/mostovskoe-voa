@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import { site } from "../data/site";
+---
+
+<Layout title="Страница не найдена" noindex={true}>
+  <section class="section">
+    <div class="container-page max-w-2xl text-center space-y-6">
+      <p class="font-display font-bold text-7xl md:text-9xl text-brand-900">
+        404
+      </p>
+      <h1 class="font-display font-bold text-3xl md:text-4xl text-brand-950">
+        Страница не найдена
+      </h1>
+      <p class="text-ink-700">
+        Похоже, такой страницы нет. Возможно, она была перенесена или вы
+        ошиблись в адресе. Попробуйте вернуться на главную или воспользуйтесь
+        меню.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/" class="btn btn-primary">
+          На главную
+          <Icon name="arrow-right" size={16} />
+        </a>
+        <a href="/contacts/" class="btn btn-ghost">
+          <Icon name="phone" size={16} />
+          {site.phones[0]}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

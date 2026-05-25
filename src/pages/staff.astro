@@ -1,0 +1,107 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { staff, subjectsLegend } from "../data/staff";
+---
+
+<Layout
+  title="Преподаватели и инструкторы"
+  pageTitle="Преподаватели и инструкторы"
+  description="Команда автошколы Мостовское ВОА: квалификация, преподаваемые предметы и стаж работы каждого преподавателя."
+>
+  <section class="section">
+    <div class="container-page space-y-10">
+      <SectionHeading
+        eyebrow="Команда"
+        title="Кто ведёт ваше обучение"
+        description="Все преподаватели прошли курсы повышения квалификации и имеют официальные удостоверения для ведения профессионального обучения водителей."
+      />
+
+      <div class="grid lg:grid-cols-2 gap-5" data-reveal-stagger>
+        {
+          staff.map((m) => (
+            <article class="card card-tilt grid sm:grid-cols-[auto,1fr] gap-5">
+              <div
+                class="relative grid place-items-center size-24 sm:size-32 shrink-0 rounded-2xl bg-gradient-to-br from-brand-900 to-brand-700 text-white overflow-hidden"
+                aria-hidden="true"
+              >
+                <div class="absolute inset-0 dot-pattern opacity-50" />
+                <div class="absolute -bottom-3 -right-3 w-16 h-16 rounded-full bg-accent-400/30 blur-2xl" />
+                <span class="relative font-display font-extrabold text-3xl text-accent-300">
+                  {m.name.split(" ").map((s) => s.charAt(0)).join("").slice(0, 2)}
+                </span>
+              </div>
+              <div class="space-y-3">
+                <header>
+                  <p class="text-xs text-accent-600 font-bold uppercase tracking-wider">
+                    {m.role}
+                  </p>
+                  <h3 class="font-display font-bold text-xl text-brand-950 mt-0.5">
+                    {m.name}
+                  </h3>
+                </header>
+                <div class="flex flex-wrap gap-1.5">
+                  {
+                    m.subjects.map((s) => (
+                      <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-brand-50 text-brand-800 text-xs font-medium">
+                        {s}
+                      </span>
+                    ))
+                  }
+                </div>
+                <p class="text-sm text-ink-700 leading-relaxed text-pretty">
+                  {m.qualification}
+                </p>
+                <dl class="grid grid-cols-3 gap-2 text-center text-xs pt-3 border-t border-ink-100">
+                  <div>
+                    <dt class="text-ink-500">Образование</dt>
+                    <dd class="font-semibold text-brand-950 mt-0.5 leading-tight">
+                      {m.education.split(",")[0]}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-ink-500">Общий стаж</dt>
+                    <dd class="font-semibold text-brand-950 mt-0.5">
+                      {m.totalExperience}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-ink-500">Преподаёт</dt>
+                    <dd class="font-semibold text-brand-950 mt-0.5">
+                      {m.teachingExperience}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-page space-y-6">
+      <SectionHeading
+        eyebrow="Расшифровка"
+        title="Сокращения учебных предметов"
+      />
+      <dl class="grid md:grid-cols-2 gap-3">
+        {
+          subjectsLegend.map((s) => (
+            <div class="card flex items-start gap-3 py-4">
+              <span class="grid place-items-center px-2.5 h-7 rounded-md bg-brand-900 text-accent-300 text-xs font-bold whitespace-nowrap">
+                {s.code}
+              </span>
+              <span class="text-sm text-ink-700">{s.full}</span>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="text-xs text-ink-500 max-w-2xl">
+        Полный список преподавательского состава с реквизитами свидетельств о
+        повышении квалификации доступен по запросу в офисе автошколы.
+      </p>
+    </div>
+  </section>
+</Layout>

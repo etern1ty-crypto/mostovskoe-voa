@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061534"/>
+      <stop offset="0.5" stop-color="#0c2c5c"/>
+      <stop offset="1" stop-color="#163774"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.15" r="0.6">
+      <stop offset="0" stop-color="#f59e0b" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g font-family="Manrope, Inter, sans-serif" fill="#ffffff">
+    <text x="80" y="160" font-size="36" font-weight="700" fill="#fbc54e" letter-spacing="6">МОСТОВСКОЕ ВОА · С 1973</text>
+    <text x="80" y="320" font-size="96" font-weight="800" letter-spacing="-3">Автошкола</text>
+    <text x="80" y="420" font-size="56" font-weight="600" fill="#d8e3f5">Категории A · B · C</text>
+    <text x="80" y="490" font-size="56" font-weight="600" fill="#d8e3f5">Переподготовка</text>
+    <text x="80" y="570" font-size="32" font-weight="500" fill="#7ea2dd">mostovskoevoa.ru · +7 (918) 327-89-99</text>
+  </g>
+  <g transform="translate(900, 280)">
+    <circle r="180" fill="#0f2755" stroke="#f59e0b" stroke-width="4"/>
+    <circle r="80" fill="#f59e0b"/>
+    <text y="20" font-family="Manrope, Inter, sans-serif" font-size="120" font-weight="800" text-anchor="middle" fill="#061534">В</text>
+  </g>
+</svg>

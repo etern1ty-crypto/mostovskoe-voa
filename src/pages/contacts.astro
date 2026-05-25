@@ -1,0 +1,236 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { site } from "../data/site";
+import { categories } from "../data/categories";
+---
+
+<Layout
+  title="Контакты"
+  pageTitle="Контакты"
+  description="Адреса учебных классов, телефон, email и график работы Мостовского ВОА. Записывайтесь на обучение."
+>
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 space-y-5" data-reveal-stagger>
+        <SectionHeading
+          eyebrow="Как нас найти"
+          title="Контакты автошколы"
+          description="Звоните в рабочие часы или приходите в офис — поможем выбрать категорию и запишем в следующую группу."
+        />
+
+        <div class="card flex items-start gap-4">
+          <span class="grid place-items-center size-12 rounded-2xl bg-accent-100 text-accent-600 shrink-0">
+            <Icon name="phone" size={24} />
+          </span>
+          <div>
+            <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+              Телефон
+            </p>
+            <a
+              href={`tel:${site.phones[0].replace(/[^+\d]/g, "")}`}
+              class="font-display font-bold text-lg text-brand-950 hover:text-accent-600 transition-colors"
+            >
+              {site.phones[0]}
+            </a>
+          </div>
+        </div>
+
+        <div class="card flex items-start gap-4">
+          <span class="grid place-items-center size-12 rounded-2xl bg-accent-100 text-accent-600 shrink-0">
+            <Icon name="mail" size={24} />
+          </span>
+          <div class="min-w-0">
+            <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+              Email
+            </p>
+            <a
+              href={`mailto:${site.emails[0]}`}
+              class="font-display font-bold text-lg text-brand-950 hover:text-accent-600 transition-colors break-all"
+            >
+              {site.emails[0]}
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-start gap-4">
+            <span class="grid place-items-center size-12 rounded-2xl bg-accent-100 text-accent-600 shrink-0">
+              <Icon name="clock" size={24} />
+            </span>
+            <div class="flex-1">
+              <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+                График работы
+              </p>
+              <dl class="mt-2 space-y-1.5 text-sm">
+                {
+                  site.hours.map((h) => (
+                    <div class="flex items-baseline justify-between gap-2">
+                      <dt class="text-ink-700">{h.day}</dt>
+                      <dd class="font-semibold text-brand-950 text-right">
+                        {h.value}
+                      </dd>
+                    </div>
+                  ))
+                }
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 space-y-4">
+        <h2 class="font-display font-bold text-2xl text-brand-950">
+          Адреса
+        </h2>
+        <ul class="space-y-3">
+          {
+            site.addresses.map((a, i) => (
+              <li class="card flex items-start gap-4">
+                <span
+                  class:list={[
+                    "grid place-items-center size-12 rounded-2xl shrink-0",
+                    a.kind === "office"
+                      ? "bg-brand-900 text-accent-300"
+                      : "bg-brand-50 text-brand-900",
+                  ]}
+                >
+                  <Icon name="pin" size={24} />
+                </span>
+                <div class="flex-1">
+                  <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+                    {a.label}
+                  </p>
+                  <p class="text-brand-950 font-medium mt-0.5 text-pretty">
+                    {a.value}
+                  </p>
+                  <a
+                    href={`https://yandex.ru/maps/?text=${encodeURIComponent(a.value)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 text-sm text-brand-900 hover:text-accent-600 mt-2"
+                  >
+                    Открыть в Яндекс.Картах
+                    <Icon name="external" size={12} />
+                  </a>
+                </div>
+                {i === 0 && (
+                  <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full bg-accent-100 text-accent-700 text-xs font-semibold">
+                    Главный офис
+                  </span>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="card overflow-hidden p-0">
+          <iframe
+            title="Карта расположения автошколы"
+            src="https://yandex.ru/map-widget/v1/?text=Краснодарский+край+п+Мостовской+ул+Кирова+1&z=14"
+            class="w-full h-[360px] border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="signup" class="section bg-ink-50 scroll-mt-20">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 space-y-4">
+        <SectionHeading
+          eyebrow="Запись"
+          title="Запишитесь на обучение"
+          description="Оставьте контакты — перезвоним в рабочие часы. Или позвоните сами, чтобы записаться в следующую группу."
+        />
+        <ul class="space-y-2 text-sm text-ink-700">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size={18} class="text-accent-500 mt-0.5" />
+            Бесплатная консультация по выбору категории
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size={18} class="text-accent-500 mt-0.5" />
+            Помощь с оформлением документов
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size={18} class="text-accent-500 mt-0.5" />
+            Расскажем про даты следующего набора
+          </li>
+        </ul>
+      </div>
+
+      <form
+        class="lg:col-span-7 card space-y-4"
+        method="post"
+        action={`mailto:${site.emails[0]}`}
+        enctype="text/plain"
+      >
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="flex flex-col gap-1.5 text-sm">
+            <span class="font-semibold text-brand-950">Имя</span>
+            <input
+              type="text"
+              name="name"
+              required
+              class="px-4 py-2.5 rounded-xl border border-ink-300 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
+              placeholder="Ваше имя"
+            />
+          </label>
+          <label class="flex flex-col gap-1.5 text-sm">
+            <span class="font-semibold text-brand-950">Телефон</span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              class="px-4 py-2.5 rounded-xl border border-ink-300 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
+              placeholder="+7 (___) ___-__-__"
+            />
+          </label>
+        </div>
+        <label class="flex flex-col gap-1.5 text-sm">
+          <span class="font-semibold text-brand-950">Категория</span>
+          <select
+            name="category"
+            class="px-4 py-2.5 rounded-xl border border-ink-300 bg-white focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
+          >
+            <option value="">— выберите категорию —</option>
+            {categories.map((c) => (
+              <option value={c.code}>{c.title}</option>
+            ))}
+            <option value="other">Не определился</option>
+          </select>
+        </label>
+        <label class="flex flex-col gap-1.5 text-sm">
+          <span class="font-semibold text-brand-950">Сообщение (необязательно)</span>
+          <textarea
+            name="message"
+            rows="4"
+            class="px-4 py-2.5 rounded-xl border border-ink-300 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100 transition"
+            placeholder="Удобное время для звонка, дополнительные вопросы и т.д."
+          ></textarea>
+        </label>
+        <label class="flex items-start gap-2 text-xs text-ink-500">
+          <input type="checkbox" required class="mt-0.5" />
+          <span>
+            Я согласен на обработку персональных данных в соответствии с
+            <a href="/documents/" class="text-brand-900 underline ml-1">политикой школы</a>.
+          </span>
+        </label>
+        <button type="submit" class="btn btn-primary">
+          Отправить заявку
+          <Icon name="arrow-right" size={16} />
+        </button>
+        <p class="text-xs text-ink-500">
+          Форма отправит письмо на наш email. Если форма не работает —
+          позвоните или напишите напрямую:
+          <a
+            href={`mailto:${site.emails[0]}`}
+            class="text-brand-900 underline">{site.emails[0]}</a>.
+        </p>
+      </form>
+    </div>
+  </section>
+</Layout>

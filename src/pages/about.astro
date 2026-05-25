@@ -1,0 +1,197 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Illustration from "../components/Illustration.astro";
+import { site } from "../data/site";
+
+const yearsActive = new Date().getFullYear() - site.founded;
+
+const timeline = [
+  {
+    year: "1973",
+    title: "Создано ВДОАМ — будущее ВОА",
+    text: "Всероссийское добровольное общество автомобилистов основано в 1973 году. Эта дата — начало истории организованной подготовки водителей в стране.",
+  },
+  {
+    year: "2003",
+    title: "Регистрация Мостовского отделения",
+    text: "20 января 2003 года Мостовское районное отделение Краснодарского регионального отделения ВОА внесено в реестр.",
+  },
+  {
+    year: "Сейчас",
+    title: `${yearsActive}+ лет опыта`,
+    text: "Готовим водителей категорий A, B, C, проводим переподготовку. Два учебных адреса, лицензированная организация, опытные преподаватели.",
+  },
+];
+
+const requisites: { label: string; value: string }[] = [
+  { label: "Краткое наименование", value: "Мостовское райотделение ВОА" },
+  { label: "Полное наименование", value: site.legalName },
+  { label: "ИНН", value: site.legal.inn },
+  { label: "ОГРН", value: site.legal.ogrn },
+  { label: "ОКПО", value: site.legal.okpo },
+  { label: "ОКВЭД", value: `${site.legal.okved} (общественные организации)` },
+  { label: "ОКТМО", value: site.legal.oktmo },
+  { label: "ОКАТО", value: site.legal.okato },
+  { label: "Дата внесения в реестр", value: site.registered },
+];
+---
+
+<Layout title="О школе" pageTitle="О Мостовском ВОА" description="Официальное районное отделение Всероссийского общества автомобилистов в посёлке Мостовском. История с 1973 года, лицензия, реквизиты и руководство.">
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7 space-y-6">
+        <SectionHeading
+          eyebrow="Кто мы"
+          title="Официальное районное отделение ВОА"
+          description="Мостовское РО — часть Краснодарского регионального отделения общественной организации «Всероссийское общество автомобилистов»."
+        />
+        <div class="prose-page space-y-4 text-ink-700">
+          <p>
+            Созданное в 1973 году ВДОАМ — ВОА обрело своё место в воспитании
+            автомобилистов и предупреждении аварийности на индивидуальном
+            автотранспорте, завоевало авторитет в стране как одна из самых
+            массовых общественных организаций, играющая значительную роль в
+            профилактике ДТП.
+          </p>
+          <p>
+            Мостовское районное отделение ведёт образовательную деятельность в
+            сфере дополнительного профессионального образования: готовит
+            водителей категорий A, B, C, а также проводит переподготовку.
+            Обучение ведётся на русском языке в очно-заочной форме.
+          </p>
+          <p>
+            Государственная аккредитация образовательной деятельности по
+            реализуемым образовательным программам не требуется — в
+            соответствии с действующим законодательством для программ
+            профессионального обучения водителей.
+          </p>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-5 space-y-4" data-reveal="right">
+        <div class="relative rounded-2xl overflow-hidden shadow-xl">
+          <Illustration variant="garage" ariaLabel="Здание автошколы" />
+        </div>
+        <div class="card grid grid-cols-2 gap-4 text-center">
+          <div>
+            <p class="font-display text-3xl font-bold text-brand-900">
+              {yearsActive}+
+            </p>
+            <p class="text-xs text-ink-500 uppercase tracking-wider mt-1">
+              Лет опыта
+            </p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-bold text-brand-900">6</p>
+            <p class="text-xs text-ink-500 uppercase tracking-wider mt-1">
+              Категорий
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-page space-y-12">
+      <SectionHeading
+        eyebrow="История"
+        title="Полвека в подготовке водителей"
+        align="center"
+      />
+      <ol class="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        {
+          timeline.map((t) => (
+            <li class="card relative">
+              <span class="font-display text-4xl font-bold text-accent-400">
+                {t.year}
+              </span>
+              <h3 class="font-display font-bold text-lg text-brand-950 mt-2">
+                {t.title}
+              </h3>
+              <p class="text-sm text-ink-700 leading-relaxed mt-2">{t.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 space-y-6">
+        <SectionHeading
+          eyebrow="Руководство"
+          title="Кто отвечает за работу школы"
+        />
+        <div class="space-y-4">
+          <div class="card flex items-start gap-4">
+            <span class="grid place-items-center size-14 rounded-2xl bg-brand-900 text-accent-300 shrink-0">
+              <Icon name="users" size={28} />
+            </span>
+            <div>
+              <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+                {site.chairman.title}
+              </p>
+              <p class="font-display font-bold text-lg text-brand-950">
+                {site.chairman.name}
+              </p>
+              <p class="text-sm text-ink-700 mt-1">
+                Председатель Мостовского районного отделения ВОА.
+              </p>
+            </div>
+          </div>
+          <div class="card flex items-start gap-4">
+            <span class="grid place-items-center size-14 rounded-2xl bg-brand-900 text-accent-300 shrink-0">
+              <Icon name="graduation" size={28} />
+            </span>
+            <div>
+              <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+                {site.director.title}
+              </p>
+              <p class="font-display font-bold text-lg text-brand-950">
+                {site.director.name}
+              </p>
+              <p class="text-sm text-ink-700 mt-1">
+                Директор автошколы. Преподаёт: ОЗСДД, ОБУТС, Устройство ТС.
+              </p>
+              <a
+                href={`tel:${site.phones[0].replace(/[^+\d]/g, "")}`}
+                class="text-sm text-brand-900 hover:text-accent-500 mt-2 inline-flex items-center gap-1.5"
+              >
+                <Icon name="phone" size={14} />
+                {site.phones[0]}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <SectionHeading
+          eyebrow="Реквизиты"
+          title="Полные данные организации"
+          description="Эта информация обязательна для размещения согласно ст. 29 Федерального закона № 273-ФЗ «Об образовании в Российской Федерации»."
+        />
+        <dl class="mt-6 card grid sm:grid-cols-2 gap-x-6 gap-y-4">
+          {
+            requisites.map((r) => (
+              <div class="flex flex-col gap-1">
+                <dt class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+                  {r.label}
+                </dt>
+                <dd class="text-sm text-brand-950 font-medium">{r.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="mt-4 text-xs text-ink-500">
+          Полная реестровая выписка и копия свидетельства доступны в разделе
+          <a href="/documents/" class="text-brand-900 underline">«Документы»</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
