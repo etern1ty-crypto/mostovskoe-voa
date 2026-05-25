@@ -24,10 +24,10 @@ function iconFor(slug: string) {
         description="Каждая программа включает теорию (ПДД, устройство, безопасность, первую помощь), практику на площадке и в городе, внутренний и государственный экзамены."
       />
 
-      <div class="grid md:grid-cols-2 gap-5">
+      <div class="grid md:grid-cols-2 gap-5" data-reveal-stagger>
         {
           categories.map((c) => (
-            <article class="card flex flex-col gap-5 hover:-translate-y-1 transition-transform">
+            <article class="card card-tilt card-glow flex flex-col gap-5" data-tilt>
               <div class="flex items-start justify-between gap-4">
                 <div class="flex items-center gap-4">
                   <span class="grid place-items-center size-14 rounded-2xl bg-brand-50 text-brand-900">

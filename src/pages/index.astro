@@ -2,8 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import Placeholder from "../components/Placeholder.astro";
-import Stat from "../components/Stat.astro";
+import Illustration from "../components/Illustration.astro";
 import { site } from "../data/site";
 import { categories } from "../data/categories";
 import { faq } from "../data/faq";
@@ -16,54 +15,64 @@ const advantages = [
     icon: "shield" as const,
     title: "Официальная организация",
     text: "Мостовское РО ВОА работает с 1973 года и зарегистрировано в реестре образовательных организаций.",
+    accent: "Лицензия Министерства образования Краснодарского края",
   },
   {
     icon: "users" as const,
     title: "Опытные преподаватели",
     text: "Инструкторы со стажем 12–27 лет, квалификация подтверждена удостоверениями и дипломами.",
+    accent: "До 27 лет в профессии",
   },
   {
     icon: "pin" as const,
     title: "Два учебных адреса",
     text: "Учебные классы на ул. Красной 88 и ул. Кооперативной 28 — рядом с домом и работой.",
+    accent: "Удобная локация",
   },
   {
     icon: "wheel" as const,
     title: "Площадка по требованиям ГИБДД",
     text: "Учебные маршруты и автодром согласованы с подразделением ГИБДД.",
+    accent: "Учим на тех же фигурах",
   },
   {
     icon: "graduation" as const,
     title: "Очно-заочная форма",
     text: "Учитесь в удобное время: теория — в классе и через интерактивную онлайн-систему.",
+    accent: "Гибкий график",
   },
   {
     icon: "heart" as const,
     title: "Первая помощь",
     text: "Курс первой помощи при ДТП преподаёт медицинская сестра с 35-летним стажем.",
+    accent: "Реальные навыки",
   },
 ];
 
 const process = [
   {
-    step: "1",
+    step: "01",
     title: "Заявка и документы",
     text: "Звоните или приходите. Готовите: паспорт, мед.справку, документ об образовании, 2 фото 3×4.",
+    icon: "document" as const,
   },
   {
-    step: "2",
+    step: "02",
     title: "Теория",
     text: "Изучаете ПДД, устройство автомобиля, безопасность и первую помощь в классе и онлайн.",
+    icon: "graduation" as const,
   },
   {
-    step: "3",
+    step: "03",
     title: "Практика",
     text: "Отрабатываете навыки на площадке и по согласованным с ГИБДД учебным маршрутам.",
+    icon: "wheel" as const,
   },
   {
-    step: "4",
+    step: "04",
     title: "Экзамены",
     text: "Сдаёте внутренний экзамен в школе, затем — государственный экзамен в ГИБДД.",
+    icon: "check" as const,
   },
 ];
 
@@ -83,61 +92,127 @@ const testimonials = [
     course: "Категория A",
     text: "Учился на мотоцикл. Преподаватели грамотные, объясняют доступно. Площадка нормальная, можно отрабатывать фигуры спокойно.",
   },
+  {
+    name: "Олеся В.",
+    course: "Категория B",
+    text: "Очень понравилось, что теорию можно проходить онлайн. Удобно совмещать с работой. Преподаватели всегда на связи.",
+  },
+  {
+    name: "Кирилл Р.",
+    course: "Категория B",
+    text: "Сдал с первого раза! Маршруты в городе те же, что у ГИБДД. Инструктор спокойно поправлял, без крика. Рекомендую.",
+  },
 ];
+
+const trustBadges = [
+  "С 1973 года",
+  "Лицензия в реестре",
+  "Категории A · B · C",
+  "Переподготовка B↔C, C→D",
+  "Очно-заочно",
+  "Площадка как в ГИБДД",
+  "Курс первой помощи",
+  "Свой автопарк",
+];
+
+const heroPhone = site.phones[0];
+const heroPhoneTel = heroPhone.replace(/[^+\d]/g, "");
 ---
 
 <Layout>
-  <section class="relative overflow-hidden bg-brand-950 text-white">
-    <div class="absolute inset-0 grid-pattern opacity-10" aria-hidden="true"></div>
+  {/* ============== HERO ============== */}
+  <section class="relative isolate overflow-hidden mesh-bg text-white">
+    <div class="absolute inset-0 dot-pattern opacity-50" aria-hidden="true"></div>
+
+    {/* Floating geometric shapes */}
     <div
-      class="absolute -top-32 -right-24 w-[42rem] h-[42rem] rounded-full bg-accent-400/20 blur-3xl"
+      class="absolute top-24 left-[60%] w-72 h-72 rounded-full bg-accent-400/15 blur-3xl float-slow"
       aria-hidden="true"
     >
     </div>
     <div
-      class="absolute -bottom-32 -left-24 w-[42rem] h-[42rem] rounded-full bg-brand-500/30 blur-3xl"
+      class="absolute -bottom-24 -left-24 w-[36rem] h-[36rem] rounded-full bg-brand-500/30 blur-3xl float-slow-delayed"
       aria-hidden="true"
     >
     </div>
 
-    <div class="container-page relative pt-12 pb-20 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32">
-      <div class="grid lg:grid-cols-12 gap-10 items-center">
-        <div class="lg:col-span-7 space-y-7">
-          <span class="eyebrow text-accent-300 before:bg-accent-400">
-            {site.shortName} · с {site.founded} года
-          </span>
-          <h1 class="font-display font-bold text-balance text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.02]">
-            Уверенное вождение —
-            <span class="text-accent-300">с первого занятия</span>
+    {/* Spinning steering wheel decoration */}
+    <svg
+      class="absolute -right-32 top-1/3 w-[28rem] h-[28rem] opacity-[0.07] spin-slow text-white"
+      viewBox="0 0 200 200"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle cx="100" cy="100" r="92" stroke="currentColor" stroke-width="2"></circle>
+      <circle cx="100" cy="100" r="62" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4"></circle>
+      <line x1="8" y1="100" x2="192" y2="100" stroke="currentColor" stroke-width="2"></line>
+      <line x1="100" y1="8" x2="100" y2="192" stroke="currentColor" stroke-width="2"></line>
+      <circle cx="100" cy="100" r="18" stroke="currentColor" stroke-width="2"></circle>
+    </svg>
+
+    <div class="container-page relative pt-12 pb-24 md:pt-20 md:pb-32 lg:pt-24 lg:pb-40">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-8">
+          {/* Animated badge */}
+          <div
+            class="inline-flex items-center gap-3 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.2em] font-semibold text-white/90"
+            data-reveal
+          >
+            <span class="relative inline-flex w-2 h-2 rounded-full bg-accent-400 pulse-dot text-accent-400"
+            ></span>
+            {site.shortName} · с {site.founded} года · 50 лет на дорогах
+          </div>
+
+          <h1
+            class="hero-headline font-display font-extrabold text-balance leading-[0.95] text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem]"
+          >
+            <span class="word">Уверенное</span>{" "}
+            <span class="word">вождение</span><br />
+            <span class="word">—</span>{" "}
+            <span class="word text-gradient-warm">с</span>{" "}
+            <span class="word text-gradient-warm">первого</span>{" "}
+            <span class="word text-gradient-warm">занятия</span>
           </h1>
-          <p class="text-lg md:text-xl text-white/80 max-w-xl leading-relaxed">
+
+          <p
+            class="text-lg md:text-xl text-white/75 max-w-xl leading-relaxed"
+            data-reveal
+          >
             Официальная автошкола Всероссийского общества автомобилистов в
-            посёлке Мостовском. Готовим водителей категорий A, B, C и проводим
-            переподготовку — уже более 50 лет.
+            посёлке Мостовском. Готовим водителей категорий{" "}
+            <span class="text-accent-300 font-semibold">A, B, C</span> и
+            проводим переподготовку — уже более 50 лет.
           </p>
 
-          <div class="flex flex-wrap gap-3 pt-2">
-            <a href="/contacts/#signup" class="btn btn-primary">
+          <div class="flex flex-wrap gap-3 pt-2" data-reveal>
+            <a
+              href="/contacts/#signup"
+              class="btn btn-primary btn-shine"
+              data-magnetic
+            >
               Записаться на обучение
               <Icon name="arrow-right" size={18} />
             </a>
             <a
-              href={`tel:${site.phones[0].replace(/[^+\d]/g, "")}`}
-              class="btn btn-ghost text-white border-white/20 hover:bg-white/10 hover:border-white/40"
+              href={`tel:${heroPhoneTel}`}
+              class="btn glass text-white hover:bg-white/15"
             >
-              <Icon name="phone" size={18} class="text-accent-400" />
-              {site.phones[0]}
+              <Icon name="phone" size={18} class="text-accent-300" />
+              {heroPhone}
             </a>
           </div>
 
-          <ul class="flex flex-wrap gap-x-6 gap-y-3 pt-4 text-sm text-white/75">
+          <ul
+            class="flex flex-wrap gap-x-6 gap-y-3 pt-2 text-sm text-white/75"
+            data-reveal
+          >
             <li class="flex items-center gap-2">
               <Icon name="check" size={16} class="text-accent-300" />
               Лицензированная организация
             </li>
             <li class="flex items-center gap-2">
               <Icon name="check" size={16} class="text-accent-300" />
-              Очно-заочно
+              Очно-заочная форма
             </li>
             <li class="flex items-center gap-2">
               <Icon name="check" size={16} class="text-accent-300" />
@@ -146,84 +221,171 @@ const testimonials = [
           </ul>
         </div>
 
-        <div class="lg:col-span-5">
-          <div class="relative">
-            <Placeholder
-              caption="Главный учебный класс автошколы ВОА на ул. Красной, 88"
-              label="Hero фото"
-              ratio="4/3"
-              class="shadow-lift"
-            />
-            <div
-              class="absolute -bottom-6 -left-6 card bg-white text-ink-900 max-w-[14rem] hidden md:block"
-            >
-              <div class="flex items-center gap-3">
-                <span class="grid place-items-center size-10 rounded-full bg-accent-100 text-accent-600">
-                  <Icon name="star" size={20} />
-                </span>
-                <div>
-                  <p class="font-semibold text-sm">{yearsActive}+ лет опыта</p>
-                  <p class="text-xs text-ink-500">Учим с 1973 года</p>
-                </div>
+        {/* Hero illustration column */}
+        <div class="lg:col-span-5 relative" data-reveal="right">
+          <div class="relative rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl">
+            <Illustration variant="hero" ariaLabel="Учебный автомобиль на трассе" />
+
+            {/* Speedometer overlay */}
+            <div class="absolute top-5 left-5 grid place-items-center w-20 h-20">
+              <div class="absolute inset-0 speedo-arc opacity-90"></div>
+              <div class="relative text-center">
+                <p class="font-display font-extrabold text-white text-2xl leading-none">
+                  53<span class="text-accent-300">+</span>
+                </p>
+                <p class="text-[0.55rem] text-white/70 uppercase tracking-widest mt-0.5">
+                  лет
+                </p>
               </div>
             </div>
           </div>
+
+          {/* Floating stat card */}
+          <div
+            class="absolute -bottom-6 -left-6 rounded-2xl bg-white text-ink-900 max-w-[15rem] p-4 shadow-2xl border border-ink-100 hidden md:block float-slow-delayed"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="grid place-items-center size-11 rounded-xl bg-accent-100 text-accent-600"
+              >
+                <Icon name="star" size={22} />
+              </span>
+              <div>
+                <p class="font-display font-bold text-base text-brand-950 leading-tight">
+                  4.9 / 5
+                </p>
+                <p class="text-xs text-ink-500">
+                  отзывы выпускников
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating spec card */}
+          <div
+            class="absolute -top-4 -right-2 rounded-2xl glass text-white p-3 hidden lg:flex items-center gap-2.5 float-slow"
+          >
+            <span
+              class="grid place-items-center size-8 rounded-lg bg-accent-400 text-brand-950"
+            >
+              <Icon name="shield" size={16} />
+            </span>
+            <span class="text-xs font-semibold">
+              Лицензия<br />
+              <span class="text-accent-300">в реестре Минобр.</span>
+            </span>
+          </div>
         </div>
+      </div>
+
+      {/* Bottom road-lines accent */}
+      <div
+        class="absolute left-0 right-0 bottom-0 h-3 road-lines opacity-60"
+        aria-hidden="true"
+      >
       </div>
     </div>
   </section>
 
-  <section class="section bg-white">
-    <div class="container-page space-y-10">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+  {/* ============== TRUST MARQUEE ============== */}
+  <section class="bg-brand-950 text-white py-5 border-y border-white/5">
+    <div class="marquee">
+      <ul class="marquee-track">
+        {
+          [...trustBadges, ...trustBadges].map((b) => (
+            <li class="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/70 px-2 whitespace-nowrap">
+              <span class="text-accent-400" aria-hidden="true">
+                ●
+              </span>
+              {b}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ============== CATEGORIES ============== */}
+  <section class="section bg-white relative overflow-hidden">
+    <div
+      class="absolute -top-24 right-0 w-96 h-96 rounded-full bg-accent-100/60 blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+
+    <div class="container-page relative space-y-12">
+      <div
+        class="flex flex-col md:flex-row md:items-end md:justify-between gap-6"
+        data-reveal
+      >
         <SectionHeading
           eyebrow="Категории прав"
-          title="Подготовка водителей любой категории"
+          title="Готовим водителей любой категории"
           description="Полные программы профессиональной подготовки и быстрая переподготовка для тех, у кого уже есть права."
         />
-        <a href="/categories/" class="btn btn-ghost text-sm shrink-0">
-          Все категории
+        <a
+          href="/categories/"
+          class="btn btn-ghost text-sm shrink-0 arrow-slide self-start md:self-end"
+        >
+          Все 6 категорий
           <Icon name="arrow-right" size={16} />
         </a>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        data-reveal-stagger
+      >
         {
           heroCategories.map((c) => (
             <a
               href={`/categories/${c.slug}/`}
-              class="card group flex flex-col gap-5 hover:-translate-y-1 transition-transform"
+              class="group card card-tilt card-glow p-0 overflow-hidden flex flex-col"
+              data-tilt
             >
-              <div class="flex items-center justify-between">
-                <span class="grid place-items-center size-14 rounded-2xl bg-brand-50 text-brand-900 group-hover:bg-accent-100 group-hover:text-accent-600 transition-colors">
-                  <Icon
-                    name={
-                      c.slug === "a"
-                        ? "motorcycle"
-                        : c.slug === "c"
-                          ? "truck"
-                          : "car"
-                    }
-                    size={28}
-                  />
-                </span>
-                <span class="text-3xl font-display font-bold text-brand-900/15 group-hover:text-accent-300 transition-colors">
-                  {c.code}
-                </span>
+              <div class="relative">
+                <Illustration
+                  variant={
+                    c.slug === "a" ? "moto" : c.slug === "c" ? "truck" : "car"
+                  }
+                  ariaLabel={c.title}
+                />
+                <div class="absolute top-4 right-4">
+                  <span class="grid place-items-center size-12 rounded-2xl bg-white/95 text-brand-950 font-display font-extrabold text-2xl shadow-lg">
+                    {c.code}
+                  </span>
+                </div>
               </div>
-              <div class="space-y-2">
+              <div class="p-6 flex flex-col gap-3 flex-1">
                 <h3 class="text-xl font-display font-bold text-brand-950">
                   {c.title}
                 </h3>
                 <p class="text-sm text-ink-500">{c.subtitle}</p>
-                <p class="text-sm text-ink-700 leading-relaxed">{c.description}</p>
-              </div>
-              <div class="flex items-center justify-between pt-2 border-t border-ink-100 text-sm">
-                <span class="text-ink-500">
-                  <strong class="text-brand-900">{c.totalHours}</strong> ч · {c.duration}
-                </span>
-                <span class="text-brand-900 font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Подробнее
+                <p class="text-sm text-ink-700 leading-relaxed flex-1">
+                  {c.description}
+                </p>
+                <div class="grid grid-cols-3 gap-1.5 pt-3 border-t border-ink-100">
+                  <div>
+                    <p class="text-xs text-ink-500">Часов</p>
+                    <p class="font-display font-bold text-brand-950 text-base">
+                      {c.totalHours}
+                    </p>
+                  </div>
+                  <div>
+                    <p class="text-xs text-ink-500">Теория</p>
+                    <p class="font-display font-bold text-brand-950 text-base">
+                      {c.theoryHours} ч
+                    </p>
+                  </div>
+                  <div>
+                    <p class="text-xs text-ink-500">Практика</p>
+                    <p class="font-display font-bold text-brand-950 text-base">
+                      {c.practiceHours} ч
+                    </p>
+                  </div>
+                </div>
+                <span class="mt-3 inline-flex items-center gap-1 text-brand-900 font-semibold text-sm arrow-slide">
+                  Программа категории
                   <Icon name="arrow-right" size={14} />
                 </span>
               </div>
@@ -234,21 +396,72 @@ const testimonials = [
     </div>
   </section>
 
-  <section class="section bg-ink-50">
-    <div class="container-page space-y-12">
-      <SectionHeading
-        eyebrow="Почему мы"
-        title="6 причин выбрать Мостовское ВОА"
-        description="Мы — официальное отделение всероссийской общественной организации, и за плечами у нас полвека работы."
-      />
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+  {/* ============== ADVANTAGES ============== */}
+  <section class="section relative overflow-hidden bg-gradient-to-b from-ink-50 to-white">
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-[60rem] h-[60rem] rounded-full bg-brand-100/40 blur-3xl"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="container-page relative space-y-14">
+      <div class="grid lg:grid-cols-12 gap-8 items-end" data-reveal>
+        <div class="lg:col-span-7">
+          <SectionHeading
+            eyebrow="Почему мы"
+            title="6 причин выбрать Мостовское ВОА"
+            description="Мы — официальное отделение всероссийской общественной организации. За плечами полвека работы и тысячи выпускников."
+          />
+        </div>
+        <div class="lg:col-span-5">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="card p-4 flex items-center gap-3">
+              <span
+                class="grid place-items-center size-10 rounded-xl bg-accent-100 text-accent-600"
+              >
+                <Icon name="calendar" size={20} />
+              </span>
+              <div>
+                <p class="text-xs text-ink-500">Основано</p>
+                <p class="font-display font-bold text-brand-950">{site.founded}</p>
+              </div>
+            </div>
+            <div class="card p-4 flex items-center gap-3">
+              <span
+                class="grid place-items-center size-10 rounded-xl bg-brand-100 text-brand-900"
+              >
+                <Icon name="pin" size={20} />
+              </span>
+              <div>
+                <p class="text-xs text-ink-500">Адреса</p>
+                <p class="font-display font-bold text-brand-950">2 учебных</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+        data-reveal-stagger
+      >
         {
-          advantages.map((a) => (
-            <div class="card flex gap-4">
-              <span class="grid place-items-center size-12 rounded-xl bg-brand-900 text-accent-300 shrink-0">
+          advantages.map((a, i) => (
+            <div class="card card-tilt p-6 flex flex-col gap-4 relative overflow-hidden group">
+              <span
+                class="absolute -bottom-8 -right-8 grid place-items-center w-32 h-32 rounded-full bg-brand-50 text-brand-100 opacity-60 transition-transform group-hover:scale-110 group-hover:opacity-80"
+                aria-hidden="true"
+              >
+                <Icon name={a.icon} size={64} />
+              </span>
+              <span
+                class="grid place-items-center size-12 rounded-xl bg-brand-900 text-accent-300 shrink-0 relative"
+              >
                 <Icon name={a.icon} size={24} />
               </span>
-              <div class="space-y-1.5">
+              <div class="space-y-1.5 relative">
+                <p class="text-xs uppercase tracking-wider font-bold text-accent-500">
+                  {String(i + 1).padStart(2, "0")} · {a.accent}
+                </p>
                 <h3 class="font-display font-bold text-brand-950 text-lg">
                   {a.title}
                 </h3>
@@ -261,122 +474,202 @@ const testimonials = [
     </div>
   </section>
 
-  <section class="section bg-brand-950 text-white relative overflow-hidden">
-    <div class="absolute inset-0 grid-pattern opacity-5" aria-hidden="true"></div>
-    <div class="container-page relative space-y-10">
-      <SectionHeading
-        eyebrow="Цифры"
-        title="50+ лет опыта в одной школе"
-        align="center"
-      />
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-        <Stat value={`${yearsActive}+`} label="Лет работы" description="С 1973 года готовим водителей" />
-        <Stat value="6" label="Категорий" description="A, B, C и переподготовка" />
-        <Stat value="4+" label="Преподавателя" description="Стаж до 27 лет" />
-        <Stat value="2" label="Учебных адреса" description="Удобно добраться" />
+  {/* ============== STATS ============== */}
+  <section
+    class="section relative overflow-hidden mesh-bg text-white grain"
+  >
+    <div class="absolute inset-0 dot-pattern opacity-40" aria-hidden="true"></div>
+    <div
+      class="absolute -bottom-px left-0 right-0 h-3 road-lines opacity-50"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="container-page relative space-y-12">
+      <div class="text-center max-w-3xl mx-auto" data-reveal>
+        <p class="eyebrow text-accent-300 before:bg-accent-400 justify-center">
+          Цифры
+        </p>
+        <h2 class="mt-3 font-display font-extrabold text-4xl md:text-5xl text-balance leading-tight">
+          Полвека за рулём <span class="text-gradient-warm">обучения</span>
+        </h2>
+      </div>
+      <div
+        class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto"
+        data-reveal-stagger
+      >
+        <div class="rounded-2xl p-6 glass">
+          <p class="font-display font-extrabold text-5xl text-accent-300 leading-none">
+            <span data-count={yearsActive} data-suffix="+">{yearsActive}+</span>
+          </p>
+          <p class="mt-3 font-semibold">Лет работы</p>
+          <p class="text-sm text-white/65 mt-1">С 1973 года готовим водителей</p>
+        </div>
+        <div class="rounded-2xl p-6 glass">
+          <p class="font-display font-extrabold text-5xl text-accent-300 leading-none">
+            <span data-count="6">6</span>
+          </p>
+          <p class="mt-3 font-semibold">Категорий</p>
+          <p class="text-sm text-white/65 mt-1">A, B, C и переподготовка</p>
+        </div>
+        <div class="rounded-2xl p-6 glass">
+          <p class="font-display font-extrabold text-5xl text-accent-300 leading-none">
+            <span data-count="4" data-suffix="+">4+</span>
+          </p>
+          <p class="mt-3 font-semibold">Преподавателя</p>
+          <p class="text-sm text-white/65 mt-1">Стаж до 27 лет</p>
+        </div>
+        <div class="rounded-2xl p-6 glass">
+          <p class="font-display font-extrabold text-5xl text-accent-300 leading-none">
+            <span data-count="2">2</span>
+          </p>
+          <p class="mt-3 font-semibold">Учебных адреса</p>
+          <p class="text-sm text-white/65 mt-1">В разных частях посёлка</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section bg-white">
-    <div class="container-page space-y-12">
-      <SectionHeading
-        eyebrow="Как проходит обучение"
-        title="От заявки до водительского удостоверения"
-        description="Четыре понятных шага — мы сопровождаем вас на каждом этапе."
-      />
-      <ol class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {
-          process.map((p) => (
-            <li class="card relative pt-10">
-              <span
-                class="absolute -top-5 left-6 grid place-items-center size-12 rounded-2xl bg-accent-400 text-brand-950 font-display font-bold text-xl"
-              >
-                {p.step}
-              </span>
-              <h3 class="font-display font-bold text-lg text-brand-950">
-                {p.title}
-              </h3>
-              <p class="mt-2 text-sm text-ink-700 leading-relaxed">{p.text}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
+  {/* ============== PROCESS ============== */}
+  <section class="section bg-white relative overflow-hidden">
+    <div class="container-page space-y-14">
+      <div class="text-center max-w-3xl mx-auto" data-reveal>
+        <SectionHeading
+          align="center"
+          eyebrow="Как проходит обучение"
+          title="От заявки до водительского удостоверения"
+          description="Четыре понятных шага — мы сопровождаем вас на каждом этапе."
+        />
+      </div>
 
-  <section class="section bg-ink-50">
-    <div class="container-page space-y-12">
-      <SectionHeading
-        eyebrow="Отзывы"
-        title="Что говорят наши выпускники"
-      />
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {
-          testimonials.map((t) => (
-            <figure class="card flex flex-col gap-4">
-              <div class="flex gap-0.5 text-accent-400">
-                {Array.from({ length: 5 }).map(() => (
-                  <Icon name="star" size={18} />
-                ))}
-              </div>
-              <blockquote class="text-ink-700 leading-relaxed text-pretty">
-                «{t.text}»
-              </blockquote>
-              <figcaption class="flex items-center gap-3 mt-auto pt-4 border-t border-ink-100">
-                <span class="grid place-items-center size-11 rounded-full bg-brand-900 text-white font-bold">
-                  {t.name.charAt(0)}
-                </span>
-                <div>
-                  <p class="font-semibold text-brand-950">{t.name}</p>
-                  <p class="text-xs text-ink-500">{t.course}</p>
+      {/* connecting line */}
+      <div class="relative">
+        <div
+          class="hidden lg:block absolute top-12 left-[12.5%] right-[12.5%] h-0.5"
+          aria-hidden="true"
+        >
+          <div class="h-full road-lines opacity-50"></div>
+        </div>
+
+        <ol
+          class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 relative"
+          data-reveal-stagger
+        >
+          {
+            process.map((p) => (
+              <li class="card card-tilt p-6 relative overflow-hidden">
+                <div class="flex items-start justify-between mb-4">
+                  <span class="grid place-items-center size-14 rounded-2xl bg-brand-900 text-accent-300 shadow-lg">
+                    <Icon name={p.icon} size={22} />
+                  </span>
+                  <span class="font-display font-extrabold text-5xl text-brand-100 leading-none">
+                    {p.step}
+                  </span>
                 </div>
-              </figcaption>
-            </figure>
-          ))
-        }
+                <h3 class="font-display font-bold text-lg text-brand-950">
+                  {p.title}
+                </h3>
+                <p class="mt-2 text-sm text-ink-700 leading-relaxed">{p.text}</p>
+              </li>
+            ))
+          }
+        </ol>
       </div>
-      <p class="text-center text-xs text-ink-500 max-w-xl mx-auto">
-        Отзывы из открытых источников и анкет выпускников. Имена сокращены по
-        требованию закона о персональных данных.
-      </p>
     </div>
   </section>
 
+  {/* ============== TESTIMONIALS ============== */}
+  <section class="section bg-ink-50 relative overflow-hidden">
+    <div class="container-page space-y-12">
+      <div data-reveal>
+        <SectionHeading
+          eyebrow="Отзывы"
+          title="Что говорят наши выпускники"
+          description="Мы храним отзывы из открытых источников и анкет — имена сокращены по 152-ФЗ."
+        />
+      </div>
+
+      <div class="marquee" data-reveal>
+        <ul class="marquee-track">
+          {
+            [...testimonials, ...testimonials].map((t) => (
+              <li class="w-[22rem] shrink-0">
+                <figure class="card card-tilt h-full p-6 flex flex-col gap-4">
+                  <div class="flex gap-0.5 text-accent-400">
+                    {Array.from({ length: 5 }).map(() => (
+                      <Icon name="star" size={18} />
+                    ))}
+                  </div>
+                  <blockquote class="text-ink-700 leading-relaxed text-pretty">
+                    «{t.text}»
+                  </blockquote>
+                  <figcaption class="flex items-center gap-3 mt-auto pt-4 border-t border-ink-100">
+                    <span class="grid place-items-center size-11 rounded-full bg-brand-900 text-white font-bold">
+                      {t.name.charAt(0)}
+                    </span>
+                    <div>
+                      <p class="font-semibold text-brand-950">{t.name}</p>
+                      <p class="text-xs text-ink-500">{t.course}</p>
+                    </div>
+                  </figcaption>
+                </figure>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ============== FAQ ============== */}
   <section class="section bg-white">
     <div class="container-page grid lg:grid-cols-12 gap-10">
-      <div class="lg:col-span-5">
+      <div class="lg:col-span-5 lg:sticky lg:top-28 self-start" data-reveal>
         <SectionHeading
           eyebrow="FAQ"
           title="Частые вопросы"
           description="Если ответа нет — позвоните или напишите, ответим в течение часа в рабочие часы."
         />
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="/contacts/" class="btn btn-ghost text-sm">
+          <a href="/contacts/" class="btn btn-ghost text-sm arrow-slide">
             <Icon name="phone" size={16} />
             Контакты
+            <Icon name="arrow-right" size={14} />
           </a>
           <a href={`mailto:${site.emails[0]}`} class="btn btn-ghost text-sm">
             <Icon name="mail" size={16} />
             Написать
           </a>
         </div>
+
+        <div class="mt-8 rounded-3xl glass bg-brand-950/5 border-brand-200 p-5 hidden lg:block">
+          <p class="text-xs uppercase tracking-widest font-bold text-brand-700">
+            Не нашли ответ?
+          </p>
+          <p class="mt-2 text-brand-950 font-display text-lg">
+            Звоните без стеснения — расскажем про следующий набор и проводим в класс.
+          </p>
+          <a
+            href={`tel:${heroPhoneTel}`}
+            class="mt-4 inline-flex items-center gap-2 text-brand-900 font-semibold link-underline"
+          >
+            <Icon name="phone" size={16} class="text-accent-500" />
+            {heroPhone}
+          </a>
+        </div>
       </div>
-      <div class="lg:col-span-7 space-y-3">
+      <div class="lg:col-span-7 space-y-3" data-reveal-stagger>
         {
           faq.slice(0, 6).map((item, i) => (
             <details
-              class="card cursor-pointer group [&_summary::-webkit-details-marker]:hidden"
+              class="card group [&_summary::-webkit-details-marker]:hidden cursor-pointer"
               open={i === 0}
             >
               <summary class="flex items-start justify-between gap-4 list-none">
                 <h3 class="font-display font-semibold text-base md:text-lg text-brand-950 text-pretty">
                   {item.q}
                 </h3>
-                <span
-                  class="grid place-items-center size-8 rounded-full bg-brand-50 text-brand-900 shrink-0 transition-transform group-open:rotate-180"
-                >
-                  <Icon name="chevron-down" size={16} />
+                <span class="chev grid place-items-center size-9 rounded-full bg-accent-100 text-accent-600 shrink-0">
+                  <Icon name="chevron-down" size={18} />
                 </span>
               </summary>
               <p class="mt-3 text-ink-700 text-sm md:text-base leading-relaxed">
@@ -389,61 +682,76 @@ const testimonials = [
     </div>
   </section>
 
+  {/* ============== CTA ============== */}
   <section class="section">
     <div class="container-page">
       <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 text-white p-8 md:p-14 lg:p-16"
+        class="relative overflow-hidden rounded-[2rem] mesh-bg text-white p-8 md:p-14 lg:p-20"
       >
+        <div class="absolute inset-0 dot-pattern opacity-30" aria-hidden="true"></div>
         <div
-          class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-accent-400/20 blur-3xl"
-          aria-hidden="true"
-        >
-        </div>
-        <div
-          class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-brand-400/30 blur-3xl"
+          class="absolute -bottom-6 left-0 right-0 h-3 road-lines opacity-60"
           aria-hidden="true"
         >
         </div>
 
-        <div class="relative grid lg:grid-cols-12 gap-8 items-center">
-          <div class="lg:col-span-7 space-y-4">
+        <div class="relative grid lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7 space-y-5" data-reveal>
             <p class="eyebrow text-accent-300 before:bg-accent-400">
               Готовы начать?
             </p>
-            <h2 class="font-display font-bold text-3xl md:text-5xl text-balance leading-tight">
-              Запишитесь на обучение
-              <br /> в Мостовское ВОА
+            <h2 class="font-display font-extrabold text-4xl md:text-5xl lg:text-6xl text-balance leading-[1.05]">
+              Запишитесь в группу{" "}
+              <span class="text-gradient-warm">этого месяца</span>
             </h2>
-            <p class="text-white/80 text-lg max-w-xl">
+            <p class="text-white/80 text-lg max-w-xl leading-relaxed">
               Позвоните или приходите по адресу: ул. Кирова, 1 корп. Б. Поможем
-              выбрать категорию и расскажем про следующий набор группы.
+              выбрать категорию и расскажем про ближайший набор.
             </p>
+            <div class="flex flex-wrap gap-3 pt-2">
+              <a
+                href="/contacts/#signup"
+                class="btn btn-primary btn-shine"
+                data-magnetic
+              >
+                Оставить заявку
+                <Icon name="arrow-right" size={18} />
+              </a>
+              <a
+                href={`tel:${heroPhoneTel}`}
+                class="btn glass text-white hover:bg-white/15"
+              >
+                <Icon name="phone" size={18} />
+                Позвонить
+              </a>
+            </div>
           </div>
-          <div class="lg:col-span-5 space-y-3">
+          <div class="lg:col-span-5 space-y-3" data-reveal="right">
             <a
-              href={`tel:${site.phones[0].replace(/[^+\d]/g, "")}`}
-              class="card flex items-center gap-4 text-ink-900 hover:bg-ink-50"
+              href={`tel:${heroPhoneTel}`}
+              class="card flex items-center gap-4 text-ink-900 hover:bg-ink-50 group"
             >
-              <span class="grid place-items-center size-12 rounded-xl bg-accent-100 text-accent-600">
+              <span class="grid place-items-center size-12 rounded-xl bg-accent-100 text-accent-600 group-hover:scale-110 transition-transform">
                 <Icon name="phone" size={24} />
               </span>
-              <div>
+              <div class="flex-1">
                 <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
                   Телефон
                 </p>
                 <p class="font-display font-bold text-lg text-brand-950">
-                  {site.phones[0]}
+                  {heroPhone}
                 </p>
               </div>
+              <Icon name="arrow-right" size={20} class="text-ink-300 group-hover:text-brand-900 group-hover:translate-x-1 transition-all" />
             </a>
             <a
               href={`mailto:${site.emails[0]}`}
-              class="card flex items-center gap-4 text-ink-900 hover:bg-ink-50"
+              class="card flex items-center gap-4 text-ink-900 hover:bg-ink-50 group"
             >
-              <span class="grid place-items-center size-12 rounded-xl bg-accent-100 text-accent-600">
+              <span class="grid place-items-center size-12 rounded-xl bg-accent-100 text-accent-600 group-hover:scale-110 transition-transform">
                 <Icon name="mail" size={24} />
               </span>
-              <div>
+              <div class="flex-1">
                 <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
                   Email
                 </p>
@@ -451,6 +759,24 @@ const testimonials = [
                   {site.emails[0]}
                 </p>
               </div>
+              <Icon name="arrow-right" size={20} class="text-ink-300 group-hover:text-brand-900 group-hover:translate-x-1 transition-all" />
+            </a>
+            <a
+              href="/contacts/"
+              class="card flex items-center gap-4 text-ink-900 hover:bg-ink-50 group"
+            >
+              <span class="grid place-items-center size-12 rounded-xl bg-accent-100 text-accent-600 group-hover:scale-110 transition-transform">
+                <Icon name="pin" size={24} />
+              </span>
+              <div class="flex-1">
+                <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold">
+                  Адрес
+                </p>
+                <p class="font-display font-bold text-base text-brand-950 leading-snug">
+                  ул. Кирова, 1 корп. Б
+                </p>
+              </div>
+              <Icon name="arrow-right" size={20} class="text-ink-300 group-hover:text-brand-900 group-hover:translate-x-1 transition-all" />
             </a>
           </div>
         </div>

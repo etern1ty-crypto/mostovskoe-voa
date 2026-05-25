@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import Placeholder from "../components/Placeholder.astro";
+import Illustration from "../components/Illustration.astro";
 import { site } from "../data/site";
 
 const yearsActive = new Date().getFullYear() - site.founded;
@@ -70,12 +70,10 @@ const requisites: { label: string; value: string }[] = [
         </div>
       </div>
 
-      <aside class="lg:col-span-5 space-y-4">
-        <Placeholder
-          caption="Учебный класс. Здание главного офиса"
-          label="Здание автошколы"
-          ratio="4/3"
-        />
+      <aside class="lg:col-span-5 space-y-4" data-reveal="right">
+        <div class="relative rounded-2xl overflow-hidden shadow-xl">
+          <Illustration variant="garage" ariaLabel="Здание автошколы" />
+        </div>
         <div class="card grid grid-cols-2 gap-4 text-center">
           <div>
             <p class="font-display text-3xl font-bold text-brand-900">

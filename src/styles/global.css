@@ -287,4 +287,494 @@
   .text-pretty {
     text-wrap: pretty;
   }
+
+  .text-stroke {
+    -webkit-text-stroke: 1.5px currentColor;
+    color: transparent;
+  }
+
+  .text-gradient-warm {
+    background: linear-gradient(
+      120deg,
+      var(--color-accent-300) 0%,
+      var(--color-accent-400) 50%,
+      var(--color-accent-200) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ============================================================
+   Decorative layers, gradients, noise, animations
+   ============================================================ */
+
+@layer components {
+  /* Animated mesh-gradient background — multiple radial gradients */
+  .mesh-bg {
+    background-color: var(--color-brand-950);
+    background-image:
+      radial-gradient(
+        at 12% 22%,
+        rgb(245 158 11 / 0.35) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 92% 8%,
+        rgb(74 126 204 / 0.45) 0px,
+        transparent 55%
+      ),
+      radial-gradient(
+        at 8% 88%,
+        rgb(28 71 149 / 0.55) 0px,
+        transparent 60%
+      ),
+      radial-gradient(
+        at 92% 78%,
+        rgb(217 119 6 / 0.28) 0px,
+        transparent 55%
+      ),
+      radial-gradient(
+        at 50% 50%,
+        rgb(15 39 85 / 0.6) 0px,
+        transparent 70%
+      );
+    background-size: 200% 200%;
+    animation: mesh-drift 24s ease-in-out infinite alternate;
+  }
+
+  @keyframes mesh-drift {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
+  }
+
+  /* Grain / noise overlay using SVG turbulence */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* Road / asphalt texture: dashed yellow lane line */
+  .road-lines {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--color-accent-400) 0 32px,
+        transparent 32px 72px
+      );
+    background-size: 72px 100%;
+  }
+
+  /* Dot pattern */
+  .dot-pattern {
+    background-image: radial-gradient(
+      rgb(255 255 255 / 0.07) 1.25px,
+      transparent 1.5px
+    );
+    background-size: 22px 22px;
+  }
+
+  /* Glow card */
+  .card-glow {
+    position: relative;
+    isolation: isolate;
+  }
+  .card-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgb(245 158 11 / 0) 0%,
+      rgb(245 158 11 / 0) 40%,
+      rgb(245 158 11 / 0.6) 50%,
+      rgb(245 158 11 / 0) 60%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .card-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Magnetic / lift card */
+  .card-tilt {
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
+    transform-style: preserve-3d;
+  }
+  .card-tilt:hover {
+    transform: translateY(-6px) scale(1.012);
+    box-shadow:
+      0 12px 24px -8px rgb(12 44 92 / 0.18),
+      0 30px 60px -20px rgb(12 44 92 / 0.32);
+    border-color: var(--color-brand-300);
+  }
+
+  /* Animated underline links */
+  .link-underline {
+    position: relative;
+    background-image: linear-gradient(
+      currentColor,
+      currentColor
+    );
+    background-size: 0 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover {
+    background-size: 100% 1.5px;
+  }
+
+  /* Animated arrow on hover */
+  .arrow-slide {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .arrow-slide svg {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .arrow-slide svg,
+  .arrow-slide:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Ripple-like button shine */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgb(255 255 255 / 0.45) 50%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  .btn-shine:hover::after {
+    transform: translateX(120%);
+  }
+
+  /* Marquee */
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+  .marquee-track {
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Float — gentle vertical bob */
+  .float-slow {
+    animation: float 7s ease-in-out infinite;
+  }
+  .float-slow-delayed {
+    animation: float 7s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Soft pulse for status dots */
+  .pulse-dot {
+    position: relative;
+  }
+  .pulse-dot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background-color: currentColor;
+    opacity: 0.6;
+    animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+
+  /* Reveal on scroll — set by IntersectionObserver via JS */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-reveal="left"] {
+    transform: translateX(-30px);
+  }
+  [data-reveal="right"] {
+    transform: translateX(30px);
+  }
+  [data-reveal="scale"] {
+    transform: scale(0.94);
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Slight stagger via parent attr */
+  [data-reveal-stagger] > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-reveal-stagger].is-visible > * {
+    opacity: 1;
+    transform: none;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(1) {
+    transition-delay: 0.06s;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(2) {
+    transition-delay: 0.14s;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(3) {
+    transition-delay: 0.22s;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(4) {
+    transition-delay: 0.3s;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(5) {
+    transition-delay: 0.38s;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(6) {
+    transition-delay: 0.46s;
+  }
+  [data-reveal-stagger].is-visible > *:nth-child(n + 7) {
+    transition-delay: 0.54s;
+  }
+
+  /* Section divider — diagonal cut */
+  .section-cut {
+    position: relative;
+  }
+  .section-cut::before,
+  .section-cut::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: inherit;
+    z-index: 1;
+  }
+  .section-cut::before {
+    top: -1px;
+    transform: skewY(-1.6deg);
+    transform-origin: top left;
+  }
+  .section-cut::after {
+    bottom: -1px;
+    transform: skewY(-1.6deg);
+    transform-origin: bottom right;
+  }
+
+  /* Speedometer arc */
+  .speedo-arc {
+    background: conic-gradient(
+      from 220deg,
+      var(--color-accent-400) 0deg,
+      var(--color-accent-300) 60deg,
+      var(--color-brand-300) 120deg,
+      transparent 220deg 360deg
+    );
+    mask: radial-gradient(circle, transparent 56%, #000 58%);
+    -webkit-mask: radial-gradient(circle, transparent 56%, #000 58%);
+  }
+
+  /* Glass card */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.08) 0%,
+      rgb(255 255 255 / 0.02) 100%
+    );
+    border: 1px solid rgb(255 255 255 / 0.14);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Headline word-by-word reveal */
+  .hero-headline span.word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em);
+    animation: word-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .hero-headline span.word:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .hero-headline span.word:nth-child(2) {
+    animation-delay: 0.18s;
+  }
+  .hero-headline span.word:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .hero-headline span.word:nth-child(4) {
+    animation-delay: 0.42s;
+  }
+  .hero-headline span.word:nth-child(5) {
+    animation-delay: 0.54s;
+  }
+  .hero-headline span.word:nth-child(6) {
+    animation-delay: 0.66s;
+  }
+  .hero-headline span.word:nth-child(n + 7) {
+    animation-delay: 0.78s;
+  }
+  @keyframes word-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Subtle car driving across hero */
+  .car-drive {
+    animation: car-drive 18s linear infinite;
+  }
+  @keyframes car-drive {
+    0% {
+      transform: translateX(-20%) translateY(0);
+    }
+    50% {
+      transform: translateX(60%) translateY(-2px);
+    }
+    100% {
+      transform: translateX(120%) translateY(0);
+    }
+  }
+
+  /* Spin (for steering wheel decorations) */
+  .spin-slow {
+    animation: spin 28s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Marker for FAQ chevron */
+  details[open] > summary .chev {
+    transform: rotate(180deg);
+  }
+  details > summary .chev {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* Page transitions (View Transitions API) */
+::view-transition-old(root) {
+  animation: fade-out 0.25s ease both;
+}
+::view-transition-new(root) {
+  animation: fade-in 0.35s ease both;
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal],
+  [data-reveal-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import Placeholder from "../components/Placeholder.astro";
+import Illustration from "../components/Illustration.astro";
 
 const subjects = [
   {
@@ -105,12 +105,25 @@ const groups = [
           </p>
         </div>
       </div>
-      <aside class="lg:col-span-5">
-        <Placeholder
-          caption="Класс теоретической подготовки"
-          label="Учебный класс"
-          ratio="4/3"
-        />
+      <aside class="lg:col-span-5" data-reveal="right">
+        <div class="relative">
+          <Illustration
+            variant="classroom"
+            ariaLabel="Учебный класс"
+            class="shadow-2xl"
+          />
+          <div class="absolute -bottom-5 -right-5 card bg-white p-4 max-w-[14rem] hidden md:block">
+            <div class="flex items-center gap-3">
+              <span class="grid place-items-center size-10 rounded-xl bg-accent-100 text-accent-600">
+                <Icon name="graduation" size={20} />
+              </span>
+              <div>
+                <p class="font-display font-bold text-sm text-brand-950">2 класса</p>
+                <p class="text-xs text-ink-500">Красная 88 и Кооперативная 28</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </aside>
     </div>
   </section>

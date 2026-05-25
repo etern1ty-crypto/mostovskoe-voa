@@ -2,8 +2,14 @@
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
 import SectionHeading from "../components/SectionHeading.astro";
-import Placeholder from "../components/Placeholder.astro";
+import Illustration from "../components/Illustration.astro";
 import { fleet } from "../data/fleet";
+
+const variantFor = (cat: string): "moto" | "car" | "truck" => {
+  if (cat === "A") return "moto";
+  if (cat === "C") return "truck";
+  return "car";
+};
 ---
 
 <Layout
@@ -19,27 +25,28 @@ import { fleet } from "../data/fleet";
         description="Все автомобили проходят регулярное техническое обслуживание и оборудованы для безопасного учебного вождения."
       />
 
-      <div class="grid md:grid-cols-2 gap-5">
+      <div class="grid md:grid-cols-2 gap-5" data-reveal-stagger>
         {
           fleet.map((v) => (
-            <article class="card flex flex-col gap-4 overflow-hidden">
-              <Placeholder
-                caption={v.placeholderCaption}
-                label={`Категория ${v.category}`}
-                ratio="16/9"
-              />
-              <div class="space-y-2">
-                <div class="flex items-baseline justify-between gap-3">
-                  <h3 class="font-display font-bold text-xl text-brand-950">
-                    {v.model}
-                  </h3>
-                  <span class="font-display font-bold text-brand-900/15 text-2xl">
+            <article class="card card-tilt p-0 overflow-hidden flex flex-col gap-0">
+              <div class="relative">
+                <Illustration
+                  variant={variantFor(v.category)}
+                  ariaLabel={v.model}
+                />
+                <div class="absolute top-4 right-4">
+                  <span class="grid place-items-center size-11 rounded-xl bg-white/95 text-brand-950 font-display font-extrabold text-xl shadow-lg">
                     {v.category}
                   </span>
                 </div>
+              </div>
+              <div class="p-6 space-y-2">
+                <h3 class="font-display font-bold text-xl text-brand-950">
+                  {v.model}
+                </h3>
                 <p class="text-sm text-ink-700 leading-relaxed">{v.description}</p>
               </div>
-              <ul class="grid sm:grid-cols-2 gap-1.5 text-sm pt-2 border-t border-ink-100">
+              <ul class="grid sm:grid-cols-2 gap-1.5 text-sm p-6 pt-4 border-t border-ink-100">
                 {
                   v.features.map((f) => (
                     <li class="flex items-start gap-2 text-ink-700">

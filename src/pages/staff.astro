@@ -17,15 +17,19 @@ import { staff, subjectsLegend } from "../data/staff";
         description="Все преподаватели прошли курсы повышения квалификации и имеют официальные удостоверения для ведения профессионального обучения водителей."
       />
 
-      <div class="grid lg:grid-cols-2 gap-5">
+      <div class="grid lg:grid-cols-2 gap-5" data-reveal-stagger>
         {
           staff.map((m) => (
-            <article class="card grid sm:grid-cols-[auto,1fr] gap-5">
-              <div class="placeholder-photo size-24 sm:size-32 shrink-0" style="aspect-ratio: 1;">
-                <div>
-                  <div class="placeholder-label text-[0.6rem]">Фото</div>
-                  <div class="placeholder-caption text-sm">{m.name.split(" ").map((s) => s.charAt(0)).join("")}</div>
-                </div>
+            <article class="card card-tilt grid sm:grid-cols-[auto,1fr] gap-5">
+              <div
+                class="relative grid place-items-center size-24 sm:size-32 shrink-0 rounded-2xl bg-gradient-to-br from-brand-900 to-brand-700 text-white overflow-hidden"
+                aria-hidden="true"
+              >
+                <div class="absolute inset-0 dot-pattern opacity-50" />
+                <div class="absolute -bottom-3 -right-3 w-16 h-16 rounded-full bg-accent-400/30 blur-2xl" />
+                <span class="relative font-display font-extrabold text-3xl text-accent-300">
+                  {m.name.split(" ").map((s) => s.charAt(0)).join("").slice(0, 2)}
+                </span>
               </div>
               <div class="space-y-3">
                 <header>
