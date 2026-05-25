@@ -1,0 +1,112 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { docSections, usefulLinks } from "../data/documents";
+---
+
+<Layout
+  title="Документы"
+  pageTitle="Документы и нормативные акты"
+  description="Реестровая выписка, лицензия, образовательные программы, учебные планы, договоры на оказание платных образовательных услуг и прейскурант."
+>
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <aside class="lg:col-span-3">
+        <nav
+          aria-label="Разделы документов"
+          class="card sticky top-24 max-h-[calc(100vh-7rem)] overflow-auto p-4"
+        >
+          <p class="text-xs text-ink-500 uppercase tracking-wider font-semibold mb-3 px-2">
+            Разделы
+          </p>
+          <ul class="grid gap-1">
+            {
+              docSections.map((s) => (
+                <li>
+                  <a
+                    href={`#${s.anchor}`}
+                    class="block text-sm px-3 py-2 rounded-lg text-ink-700 hover:bg-brand-50 hover:text-brand-900 transition-colors"
+                  >
+                    {s.title}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a
+                href="#useful"
+                class="block text-sm px-3 py-2 rounded-lg text-ink-700 hover:bg-brand-50 hover:text-brand-900 transition-colors"
+              >
+                Полезные ссылки
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <div class="lg:col-span-9 space-y-12">
+        {
+          docSections.map((section) => (
+            <section id={section.anchor} class="scroll-mt-24 space-y-4">
+              <SectionHeading
+                title={section.title}
+                description={section.description}
+                level={2}
+              />
+              <ul class="grid sm:grid-cols-2 gap-3">
+                {
+                  section.items.map((item) => (
+                    <li>
+                      <a
+                        href={item.href}
+                        target={item.external ? "_blank" : undefined}
+                        rel={item.external ? "noopener noreferrer" : undefined}
+                        class="card flex items-start gap-3 py-4 hover:-translate-y-0.5 transition-transform"
+                      >
+                        <span class="grid place-items-center size-10 rounded-xl bg-brand-50 text-brand-900 shrink-0 group-hover:bg-accent-100 group-hover:text-accent-600 transition-colors">
+                          <Icon name="document" size={18} />
+                        </span>
+                        <span class="flex-1 text-sm text-ink-700 leading-snug">
+                          {item.label}
+                        </span>
+                        {item.external && (
+                          <Icon name="external" size={14} class="text-ink-500 mt-1 shrink-0" />
+                        )}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </section>
+          ))
+        }
+
+        <section id="useful" class="scroll-mt-24 space-y-4">
+          <SectionHeading title="Полезные ссылки" level={2} />
+          <ul class="grid sm:grid-cols-2 gap-3">
+            {
+              usefulLinks.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="card flex items-start gap-3 py-4 hover:-translate-y-0.5 transition-transform"
+                  >
+                    <span class="grid place-items-center size-10 rounded-xl bg-brand-50 text-brand-900 shrink-0">
+                      <Icon name="external" size={18} />
+                    </span>
+                    <span class="flex-1 text-sm text-ink-700 leading-snug">
+                      {link.label}
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+</Layout>

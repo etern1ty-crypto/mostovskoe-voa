@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Placeholder from "../components/Placeholder.astro";
+import { fleet } from "../data/fleet";
+---
+
+<Layout
+  title="Автопарк"
+  pageTitle="Учебный автопарк"
+  description="Учебные автомобили категорий A, B и C. Все ТС оборудованы дублирующими педалями и опознавательными знаками «Учебное транспортное средство»."
+>
+  <section class="section">
+    <div class="container-page space-y-10">
+      <SectionHeading
+        eyebrow="Автомобили"
+        title="На чём вы будете учиться"
+        description="Все автомобили проходят регулярное техническое обслуживание и оборудованы для безопасного учебного вождения."
+      />
+
+      <div class="grid md:grid-cols-2 gap-5">
+        {
+          fleet.map((v) => (
+            <article class="card flex flex-col gap-4 overflow-hidden">
+              <Placeholder
+                caption={v.placeholderCaption}
+                label={`Категория ${v.category}`}
+                ratio="16/9"
+              />
+              <div class="space-y-2">
+                <div class="flex items-baseline justify-between gap-3">
+                  <h3 class="font-display font-bold text-xl text-brand-950">
+                    {v.model}
+                  </h3>
+                  <span class="font-display font-bold text-brand-900/15 text-2xl">
+                    {v.category}
+                  </span>
+                </div>
+                <p class="text-sm text-ink-700 leading-relaxed">{v.description}</p>
+              </div>
+              <ul class="grid sm:grid-cols-2 gap-1.5 text-sm pt-2 border-t border-ink-100">
+                {
+                  v.features.map((f) => (
+                    <li class="flex items-start gap-2 text-ink-700">
+                      <Icon name="check" size={16} class="text-accent-500 mt-0.5 shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))
+                }
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="card bg-brand-50 border-brand-100 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <span class="grid place-items-center size-12 rounded-2xl bg-brand-900 text-accent-300 shrink-0">
+          <Icon name="shield" size={24} />
+        </span>
+        <p class="text-sm text-ink-700 flex-1 leading-relaxed">
+          Все учебные ТС оборудованы дублирующими педалями сцепления и тормоза,
+          дополнительными зеркалами заднего вида и опознавательными знаками
+          «Учебное транспортное средство», как того требует пункт 5 ПДД РФ.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

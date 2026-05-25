@@ -1,0 +1,286 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/Icon.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import Placeholder from "../../components/Placeholder.astro";
+import { categories } from "../../data/categories";
+import { site } from "../../data/site";
+
+export function getStaticPaths() {
+  return categories.map((c) => ({ params: { slug: c.slug }, props: { category: c } }));
+}
+
+const { category } = Astro.props;
+
+const documentsNeeded = [
+  "Медицинская справка о допуске к управлению транспортным средством",
+  "Копия паспорта (1-я страница и прописка)",
+  "Копия документа об образовании",
+  "Две фотографии 3×4 см",
+];
+
+const otherCategories = categories.filter((c) => c.slug !== category.slug).slice(0, 3);
+---
+
+<Layout
+  title={category.title}
+  pageTitle={category.title}
+  description={`${category.title} в Мостовском ВОА: ${category.totalHours} часов, длительность ${category.duration}. ${category.description}`}
+>
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7 space-y-6">
+        <SectionHeading
+          eyebrow={`Категория ${category.code}`}
+          title={category.subtitle}
+          description={category.description}
+        />
+        <div class="card bg-brand-50 border-brand-100">
+          <h3 class="font-display font-semibold text-brand-950 mb-2">
+            Транспортное средство
+          </h3>
+          <p class="text-sm text-ink-700 leading-relaxed">{category.vehicle}</p>
+        </div>
+
+        <h3 class="font-display font-bold text-xl text-brand-950 pt-4">
+          Что вы получите
+        </h3>
+        <ul class="grid sm:grid-cols-2 gap-3">
+          {
+            category.highlights.map((h) => (
+              <li class="flex items-start gap-3 text-sm text-ink-700">
+                <span class="grid place-items-center size-7 rounded-full bg-accent-100 text-accent-600 shrink-0 mt-0.5">
+                  <Icon name="check" size={14} />
+                </span>
+                <span>{h}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <aside class="lg:col-span-5 space-y-4">
+        <Placeholder
+          caption={`Учебное ТС категории ${category.code}`}
+          label="Фото"
+          ratio="4/3"
+        />
+        <div class="card space-y-3">
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-ink-500">Длительность</span>
+            <span class="font-semibold text-brand-950">{category.duration}</span>
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-ink-500">Возраст</span>
+            <span class="font-semibold text-brand-950 text-right">{category.age}</span>
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-ink-500">Форма</span>
+            <span class="font-semibold text-brand-950">Очно-заочная</span>
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-ink-500">Язык</span>
+            <span class="font-semibold text-brand-950">Русский</span>
+          </div>
+          <a href="/contacts/#signup" class="btn btn-primary w-full mt-2">
+            Записаться
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a
+            href={`tel:${site.phones[0].replace(/[^+\d]/g, "")}`}
+            class="btn btn-ghost w-full text-sm"
+          >
+            <Icon name="phone" size={16} />
+            {site.phones[0]}
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-page space-y-10">
+      <SectionHeading
+        eyebrow="Программа"
+        title="Из чего состоит обучение"
+        description="Структура курса соответствует примерной программе профессиональной подготовки водителей транспортных средств соответствующей категории."
+      />
+      <div class="grid lg:grid-cols-3 gap-5">
+        <div class="card flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <span class="grid place-items-center size-12 rounded-xl bg-brand-50 text-brand-900">
+              <Icon name="document" size={24} />
+            </span>
+            <span class="font-display text-3xl font-bold text-brand-900">
+              {category.theoryHours}
+            </span>
+          </div>
+          <h3 class="font-display font-bold text-lg text-brand-950">
+            Часов теории
+          </h3>
+          <p class="text-sm text-ink-700 leading-relaxed">
+            ПДД, основы безопасного управления ТС, устройство, психофизиологические
+            основы деятельности водителя, первая помощь при ДТП, организация
+            перевозок.
+          </p>
+        </div>
+        <div class="card flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <span class="grid place-items-center size-12 rounded-xl bg-brand-50 text-brand-900">
+              <Icon name="wheel" size={24} />
+            </span>
+            <span class="font-display text-3xl font-bold text-brand-900">
+              {category.practiceHours}
+            </span>
+          </div>
+          <h3 class="font-display font-bold text-lg text-brand-950">
+            Часов практики
+          </h3>
+          <p class="text-sm text-ink-700 leading-relaxed">
+            Площадка по требованиям ГИБДД и вождение по согласованным учебным
+            маршрутам в городских условиях.
+          </p>
+        </div>
+        <div class="card flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <span class="grid place-items-center size-12 rounded-xl bg-brand-50 text-brand-900">
+              <Icon name="shield" size={24} />
+            </span>
+            <span class="font-display text-3xl font-bold text-brand-900">
+              {category.totalHours}
+            </span>
+          </div>
+          <h3 class="font-display font-bold text-lg text-brand-950">
+            Часов всего
+          </h3>
+          <p class="text-sm text-ink-700 leading-relaxed">
+            Включая теорию, практику, внутренний и государственный экзамен в
+            ГИБДД.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-6 space-y-4">
+        <SectionHeading
+          eyebrow="Документы"
+          title="Что нужно для поступления"
+        />
+        <ul class="space-y-3">
+          {
+            documentsNeeded.map((d) => (
+              <li class="card flex items-start gap-3 py-4">
+                <span class="grid place-items-center size-8 rounded-full bg-brand-900 text-accent-300 shrink-0">
+                  <Icon name="document" size={16} />
+                </span>
+                <span class="text-sm text-ink-700">{d}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="lg:col-span-6 space-y-4">
+        <SectionHeading
+          eyebrow="Экзамены"
+          title="Как сдают на права"
+        />
+        <ol class="space-y-3">
+          <li class="card flex gap-4">
+            <span class="grid place-items-center size-10 rounded-full bg-accent-100 text-accent-600 font-bold shrink-0">
+              1
+            </span>
+            <div>
+              <h3 class="font-display font-semibold text-brand-950">
+                Внутренний экзамен
+              </h3>
+              <p class="text-sm text-ink-700 mt-1 leading-relaxed">
+                Сдаётся в автошколе по итогам курса. Включает теорию (билеты) и
+                практику (площадка + город).
+              </p>
+            </div>
+          </li>
+          <li class="card flex gap-4">
+            <span class="grid place-items-center size-10 rounded-full bg-accent-100 text-accent-600 font-bold shrink-0">
+              2
+            </span>
+            <div>
+              <h3 class="font-display font-semibold text-brand-950">
+                Государственный экзамен ГИБДД
+              </h3>
+              <p class="text-sm text-ink-700 mt-1 leading-relaxed">
+                После успешного внутреннего экзамена вы сдаёте экзамен в
+                подразделении ГИБДД. Школа предоставляет учебный автомобиль для
+                сдачи практики.
+              </p>
+            </div>
+          </li>
+          <li class="card flex gap-4">
+            <span class="grid place-items-center size-10 rounded-full bg-accent-100 text-accent-600 font-bold shrink-0">
+              3
+            </span>
+            <div>
+              <h3 class="font-display font-semibold text-brand-950">
+                Получение прав
+              </h3>
+              <p class="text-sm text-ink-700 mt-1 leading-relaxed">
+                После сдачи ГИБДД выдаёт водительское удостоверение
+                соответствующей категории.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-page space-y-10">
+      <SectionHeading
+        eyebrow="Другие категории"
+        title="Может быть, подойдёт ещё что-то"
+      />
+      <div class="grid md:grid-cols-3 gap-5">
+        {
+          otherCategories.map((c) => (
+            <a
+              href={`/categories/${c.slug}/`}
+              class="card flex flex-col gap-3 group hover:-translate-y-1 transition-transform"
+            >
+              <div class="flex items-center justify-between">
+                <span class="grid place-items-center size-12 rounded-xl bg-brand-50 text-brand-900 group-hover:bg-accent-100 group-hover:text-accent-600 transition-colors">
+                  <Icon
+                    name={
+                      c.slug === "a"
+                        ? "motorcycle"
+                        : c.slug.startsWith("c")
+                          ? "truck"
+                          : "car"
+                    }
+                    size={22}
+                  />
+                </span>
+                <span class="font-display text-2xl font-bold text-brand-900/15">
+                  {c.code}
+                </span>
+              </div>
+              <div>
+                <h3 class="font-display font-bold text-base text-brand-950">
+                  {c.title}
+                </h3>
+                <p class="text-sm text-ink-500 mt-0.5">{c.subtitle}</p>
+              </div>
+              <span class="text-sm text-brand-900 font-semibold inline-flex items-center gap-1.5 mt-auto">
+                Подробнее
+                <Icon name="arrow-right" size={14} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

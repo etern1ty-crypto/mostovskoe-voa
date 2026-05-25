@@ -1,0 +1,194 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import Placeholder from "../components/Placeholder.astro";
+
+const subjects = [
+  {
+    code: "ОЗСДД",
+    title: "Основы законодательства в сфере дорожного движения",
+    text: "Правила дорожного движения, дорожные знаки, разметка, ответственность водителя.",
+  },
+  {
+    code: "ОБУТС",
+    title: "Основы безопасного управления ТС",
+    text: "Динамика автомобиля, действия в нештатных ситуациях, экономичное и безопасное вождение.",
+  },
+  {
+    code: "Устройство ТС",
+    title: "Устройство и техническое обслуживание ТС",
+    text: "Двигатель, трансмиссия, ходовая часть, электрооборудование, базовое обслуживание.",
+  },
+  {
+    code: "ОВГП",
+    title: "Организация и выполнение грузовых перевозок",
+    text: "Для категорий C и переподготовки: документация, особенности перевозки, ответственность.",
+  },
+  {
+    code: "ОВПП",
+    title: "Организация и выполнение пассажирских перевозок",
+    text: "Для категории D и переподготовки: безопасность пассажиров, организация рейсов, психология.",
+  },
+  {
+    code: "Первая помощь",
+    title: "Первая помощь при ДТП",
+    text: "Действия на месте происшествия, первая помощь пострадавшим до приезда скорой.",
+  },
+];
+
+const facilities = [
+  {
+    icon: "graduation" as const,
+    title: "Учебные классы",
+    text: "Два класса с современным оборудованием: проектор, наглядные пособия, методические материалы.",
+  },
+  {
+    icon: "wheel" as const,
+    title: "Площадка",
+    text: "Автодром оборудован в соответствии с требованиями ГИБДД для приёма практического экзамена.",
+  },
+  {
+    icon: "route" as const,
+    title: "Учебные маршруты",
+    text: "Маршруты в посёлке Мостовском, согласованные с подразделением ГИБДД.",
+  },
+  {
+    icon: "play" as const,
+    title: "Интерактивная онлайн-система",
+    text: "Часть теоретической подготовки можно проходить дистанционно через систему онлайн-обучения.",
+  },
+  {
+    icon: "car" as const,
+    title: "Учебный автопарк",
+    text: "Автомобили категории B, грузовой ТС категории C, мотоцикл для категории A.",
+  },
+  {
+    icon: "shield" as const,
+    title: "Доступная среда",
+    text: "Доступ в здание для маломобильных групп организован в учебном корпусе.",
+  },
+];
+
+const groups = [
+  "Группа № 1 (категория B)",
+  "Группа № 4 (категория A)",
+  "Группа № 8 (категория C)",
+  "Группа № 31 (переподготовка C → B)",
+  "Группа № 23 (переподготовка C → D)",
+  "Группа № 3 (переподготовка B → C)",
+];
+---
+
+<Layout
+  title="Обучение"
+  pageTitle="Как организовано обучение"
+  description="Учебные предметы, материально-техническая база, интерактивная система онлайн-обучения, календарные графики групп."
+>
+  <section class="section">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7 space-y-6">
+        <SectionHeading
+          eyebrow="Формат"
+          title="Очно-заочная форма обучения"
+          description="Часть теории — в классе с преподавателем. Часть — самостоятельно через интерактивную онлайн-систему. Практика — на площадке и в городе."
+        />
+        <div class="prose-page space-y-3 text-ink-700">
+          <p>
+            Все программы профессиональной подготовки и переподготовки
+            соответствуют примерным программам, утверждённым Министерством
+            просвещения Российской Федерации.
+          </p>
+          <p>
+            Обучение ведётся на русском языке. Общероссийский классификатор
+            профессий: <strong>11442 — водитель автомобиля</strong>.
+          </p>
+        </div>
+      </div>
+      <aside class="lg:col-span-5">
+        <Placeholder
+          caption="Класс теоретической подготовки"
+          label="Учебный класс"
+          ratio="4/3"
+        />
+      </aside>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-page space-y-10">
+      <SectionHeading
+        eyebrow="Предметы"
+        title="Учебные дисциплины"
+        description="Полный набор предметов по программам подготовки водителей. Состав конкретной программы зависит от категории."
+      />
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {
+          subjects.map((s) => (
+            <article class="card space-y-2">
+              <p class="text-xs text-brand-700 uppercase tracking-wider font-bold">
+                {s.code}
+              </p>
+              <h3 class="font-display font-bold text-brand-950 text-lg text-pretty">
+                {s.title}
+              </h3>
+              <p class="text-sm text-ink-700 leading-relaxed">{s.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page space-y-10">
+      <SectionHeading
+        eyebrow="Материально-техническая база"
+        title="На чём учим"
+      />
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {
+          facilities.map((f) => (
+            <div class="card flex gap-4">
+              <span class="grid place-items-center size-12 rounded-xl bg-brand-900 text-accent-300 shrink-0">
+                <Icon name={f.icon} size={24} />
+              </span>
+              <div>
+                <h3 class="font-display font-bold text-brand-950">{f.title}</h3>
+                <p class="text-sm text-ink-700 leading-relaxed mt-1">{f.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-ink-50">
+    <div class="container-page grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-5 space-y-4">
+        <SectionHeading
+          eyebrow="Календарные графики"
+          title="Текущие учебные группы"
+          description="Полные графики групп с датами занятий доступны в разделе «Документы»."
+        />
+        <a href="/documents/#plans" class="btn btn-ghost text-sm">
+          Учебные планы и графики
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-3">
+        {
+          groups.map((g) => (
+            <div class="card flex items-center gap-3 py-4">
+              <span class="grid place-items-center size-9 rounded-full bg-brand-50 text-brand-900 shrink-0">
+                <Icon name="calendar" size={16} />
+              </span>
+              <span class="text-sm text-ink-700 font-medium">{g}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

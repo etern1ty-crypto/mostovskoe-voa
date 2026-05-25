@@ -1,0 +1,101 @@
+---
+import { navFooter, site } from "../data/site";
+import Icon from "./Icon.astro";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-brand-950 text-white mt-16">
+  <div class="container-page grid lg:grid-cols-12 gap-10 py-14">
+    <div class="lg:col-span-4 space-y-4">
+      <div class="flex items-center gap-3">
+        <span
+          class="grid place-items-center size-12 rounded-full bg-accent-400 text-brand-950 font-bold text-xl"
+          aria-hidden="true"
+        >
+          В
+        </span>
+        <div class="flex flex-col leading-tight">
+          <span class="font-display font-bold text-lg">{site.name}</span>
+          <span class="text-sm text-white/60">
+            Автошкола с {site.founded} года
+          </span>
+        </div>
+      </div>
+      <p class="text-sm text-white/70 leading-relaxed">
+        {site.legalName}
+      </p>
+      <p class="text-xs text-white/50">
+        ИНН {site.legal.inn} · ОГРН {site.legal.ogrn}
+      </p>
+    </div>
+
+    <div class="lg:col-span-4">
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-white/60 mb-4">
+        Разделы
+      </h3>
+      <ul class="grid sm:grid-cols-2 gap-2">
+        {
+          navFooter.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="text-sm text-white/80 hover:text-accent-300 transition-colors inline-flex items-center gap-1.5"
+              >
+                <Icon name="arrow-right" size={14} class="text-accent-400/60" />
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="lg:col-span-4 space-y-4">
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-white/60">
+        Контакты
+      </h3>
+      <ul class="space-y-3 text-sm">
+        <li class="flex gap-3">
+          <Icon name="phone" size={18} class="text-accent-400 mt-0.5 shrink-0" />
+          <a
+            href={`tel:${site.phones[0].replace(/[^+\d]/g, "")}`}
+            class="text-white hover:text-accent-300 transition-colors"
+          >
+            {site.phones[0]}
+          </a>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="mail" size={18} class="text-accent-400 mt-0.5 shrink-0" />
+          <a
+            href={`mailto:${site.emails[0]}`}
+            class="text-white hover:text-accent-300 transition-colors break-all"
+          >
+            {site.emails[0]}
+          </a>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="pin" size={18} class="text-accent-400 mt-0.5 shrink-0" />
+          <span class="text-white/85">{site.addresses[0].value}</span>
+        </li>
+        <li class="flex gap-3">
+          <Icon name="clock" size={18} class="text-accent-400 mt-0.5 shrink-0" />
+          <span class="text-white/85">
+            Вт–Пт 8:00–17:00 · Сб 8:00–16:00
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="container-page py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-white/50"
+    >
+      <p>© 1973 – {year} {site.name}. Все права защищены.</p>
+      <p>
+        Сайт обновлён в {year} году. Государственная аккредитация по реализуемым
+        образовательным программам не требуется.
+      </p>
+    </div>
+  </div>
+</footer>
